@@ -1,24 +1,48 @@
 
+
+%%Author Patric Lövgren Berg
+
 -module(dbconnect).
 
 
--export([start/0]).
+-export([start/1]).
 
+%% Defines the connection values for the DSN
 -define(ConnectStr, "DSN=Erlang;UID=root;PWD=root").
--define(X, _).
--define(ID, "0").
 
 
-start() ->
+%% Initializing of the values that are to be inserted into the DB
 
-	
+start([ID, Ini, Name, Date, Val1, Val2, Val3, StockV]) ->
+
+	%%Start ODBC
 	odbc:start(),
-
+    
+	%% Initialize the connection
 	{ok, Ref} = odbc:connect(?ConnectStr, []),
 	
-   %% odbc:sql_query(Ref, "INSERT INTO stocks (ID, Ini, Name, Date, Val1, Val2, Val3, StockV) VALUES ('"++?ID++"', 'man', 'mannen', '02/02/02', '50.0', '2.13', '15.5', 'abo123Stocks');").
-
-  odbc:sql_query(Ref, "SELECT * FROM stocks WHERE ID >='"++ ?ID ++"';").
+	%% Defines the Sql query
+	Sql_query = "INSERT INTO stocks (ID, Ini, Name, Date, Val1, Val2, Val3, StockV) VALUES
+    ('"++ID++"',
+     '"++Ini++"',
+     '"++Name++"', 
+     '"++Date++"', 
+     '"++Val1++"', 
+     '"++Val2++"', 
+     '"++Val3++"', 
+    '"++StockV++"');",
+	
+  %% Insert query into DB
+  odbc:sql_query(Ref, Sql_query),
+ 
+  
+  odbc:sql_query(Ref, "SELECT * FROM stocks;"),
+  
+  %% Disconnect from the DSN
+  odbc:disconnect(Ref),
+  
+  %% Stop the odbc service and quit
+  odbc:stop().
     
 
 
