@@ -7,10 +7,13 @@
 -export([start/0]).
 
 start() ->
-	
-Insertion = ["4", "TES", "TEST", "21/11/13", "0.42", "25.92", "30.40", "Yahoo"],
+	%%Date, Close, High, Low, Open, Volume
+    %%20121128,582.9400,585.8000,572.2600,577.2700,18602300
 
-dbconnect:start(Insertion).
+Insertion = ["20121128", "582.9400", "585.8000", "572.2600", "577.2700", "18602300"],
+Ticker = ["aapl"],
+
+dbconnect:start(Insertion, Ticker).
 
 %% ====================================================================
 %% Internal functions

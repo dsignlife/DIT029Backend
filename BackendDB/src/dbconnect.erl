@@ -5,15 +5,15 @@
 -module(dbconnect).
 
 
--export([start/1]).
+-export([start/2]).
 
 %% Defines the connection values for the DSN
--define(ConnectStr, "DSN=Erlang;UID=root;PWD=root").
+-define(ConnectStr, "DSN=erlang;UID=root;PWD=root").
 
 
 %% Initializing of the values that are to be inserted into the DB
 
-start([ID, Ini, Name, Date, Val1, Val2, Val3, StockV]) ->
+start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
 
 	%%Start ODBC
 	odbc:start(),
@@ -22,21 +22,19 @@ start([ID, Ini, Name, Date, Val1, Val2, Val3, StockV]) ->
 	{ok, Ref} = odbc:connect(?ConnectStr, []),
 	
 	%% Defines the Sql query
-	Sql_query = "INSERT INTO stocks (ID, Ini, Name, Date, Val1, Val2, Val3, StockV) VALUES
-    ('"++ID++"',
-     '"++Ini++"',
-     '"++Name++"', 
-     '"++Date++"', 
-     '"++Val1++"', 
-     '"++Val2++"', 
-     '"++Val3++"', 
-    '"++StockV++"');",
+	Sql_query = "INSERT INTO "++Ticker++" (Date, close, high, low, Open, Volume) VALUES
+    ('"++Date++"',
+     '"++Close++"', 
+     '"++High++"', 
+     '"++Low++"', 
+     '"++Open++"', 
+     '"++Volume++"');",
 	
   %% Insert query into DB
   odbc:sql_query(Ref, Sql_query),
  
   
-  odbc:sql_query(Ref, "SELECT * FROM stocks;"),
+  odbc:sql_query(Ref, "SELECT * FROM aapl;"),
   
   %% Disconnect from the DSN
   odbc:disconnect(Ref),
