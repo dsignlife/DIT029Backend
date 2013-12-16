@@ -4,30 +4,13 @@
 %% ====================================================================
 %% API functions
 %% ====================================================================
--export([start/0, ini/0, test/0]).
+-export([start/0, ini/0]).
 
 start() ->
 
     inets:start(),
 	
-	
-    Date = [],
-    Close = [],
-    High = [],
-    Low = [],
-    Open = [],
-	Volume = [],
-	
-    Var = [Date,
-    Close,
-    High,
-    Low,
-    Open,
-	Volume],
-    
-	
 
-   
     ini().
 
 ini() ->
@@ -36,21 +19,7 @@ ini() ->
         httpc:request("http://chartapi.finance.yahoo.com/instrument/1.0/AAPL/chartdata;type=quote;range=1y/csv"),
 	Data = Body,
 	
-	io:format(Data),
-	{ok, IODevice} = file:open("C:/Users/LB/Documents/erlangshiet/parser.txt", [write]),
-	
-	file:write(IODevice, Data),
-	file:close(IODevice).	
-
-read(Path) ->
-    case file:read_line(Path) of
-        {ok, Datas} -> [Datas | read(Path)];
-        eof        -> []
-    end.
-test() -> 
-	{ok, IODevice} = file:open("C:/Users/LB/Documents/erlangshiet/parser.txt", [read]),
-	read("C:/Users/LB/Documents/erlangshiet/parser.txt").
-
+	io:format(Data).
 
 
 

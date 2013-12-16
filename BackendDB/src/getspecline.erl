@@ -20,16 +20,20 @@ from_file( File, N ) -> line_nr( N, into_list(File) ).
  
 task() ->
        Lines = into_list("C:/Users/LB/Documents/erlangshiet/parser.txt"),
-       Line_7 = line_nr( 8, Lines ),
-       Line_7.
+       Line_7 = line_nr( 19 , Lines ),
+	   [Date, Close, High, Low, Open, Volume] = string:tokens(Line_7, ","),	 
+	   Volume2 = string:tokens(Volume, "\n"),
+       Insertion = [Date, Close, High, Low, Open, Volume2],
+       Ticker = ["aapl"],
+	   dbconnect:start(Insertion, Ticker).
  
  
  
 line_nr( N, Lines ) ->
          try
          case lists:nth( N, Lines )
-         of "\n" -> erlang:exit( empty_line )
-         ; Line -> Line
+         of "" -> erlang:exit( empty_line ); 
+			 Line -> Line
          end
  
          catch
@@ -39,6 +43,8 @@ line_nr( N, Lines ) ->
                 erlang:exit( Error )
  
          end.
+
+
  
 line_nr_error( function_clause ) -> too_few_lines_in_file;
 line_nr_error( Error ) -> Error.

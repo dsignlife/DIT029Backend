@@ -34,8 +34,6 @@ start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
   odbc:sql_query(Ref, Sql_query),
  
   
-  odbc:sql_query(Ref, "SELECT * FROM aapl;"),
-  
   %% Disconnect from the DSN
   odbc:disconnect(Ref),
   
