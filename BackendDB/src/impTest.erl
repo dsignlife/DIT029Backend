@@ -25,5 +25,9 @@ dbconnect:start(Insertion, Ticker).
 %% ====================================================================
 %% Internal functions
 %% ====================================================================
-
+%%[Date, Close, High, Low, Open, Volume] = string:tokens(Line_7, ","),	
+	%%   Volume2 = string:tokens(Volume, "\n"),
+   %%    Insertion = [Date, Close, High, Low, Open, Volume2],
+   %%    Ticker = ["aapl"],
+	%%   dbconnect:start(Insertion, Ticker).
 

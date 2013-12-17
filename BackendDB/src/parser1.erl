@@ -10,7 +10,24 @@ start() ->
 
     inets:start(),
 	
+	
+    Date = [],
+    Close = [],
+    High = [],
+    Low = [],
+    Open = [],
+	Volume = [],
+	
+    Var = [Date,
+    Close,
+    High,
+    Low,
+    Open,
+	Volume],
+    
+	
 
+   
     ini().
 
 ini() ->
@@ -19,7 +36,13 @@ ini() ->
         httpc:request("http://chartapi.finance.yahoo.com/instrument/1.0/AAPL/chartdata;type=quote;range=1y/csv"),
 	Data = Body,
 	
-	io:format(Data).
+	io:format(Data),
+	{ok, IODevice} = file:open("C:/Users/LB/Documents/erlangshiet/parser.txt", [write]),
+	
+	file:write(IODevice, Data),
+	file:close(IODevice).	
+
+
 
 
 
