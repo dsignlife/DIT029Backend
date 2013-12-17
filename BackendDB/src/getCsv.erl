@@ -1,12 +1,12 @@
 -module(getCsv).
--export([readlines/1, get_all_lines/1, parse/1]).
+-export([readlines/0, get_all_lines/1, parse/1]).
 parse(List) ->
     Lines = re:split(List, ","),
  io:get_line(Lines).
          
 
-readlines(Csv) ->
- {ok, Device} = file:open(Csv, [read]),
+readlines() ->
+ {ok, Device} = file:open("C:/Users/LB/Documents/erlangshiet/parser.txt", [read]),
   try get_all_lines(Device)
  after file:close(Device),
     parse(Device)

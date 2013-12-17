@@ -4,11 +4,14 @@
 
 -module(dbconnect).
 
-
 -export([start/2]).
+
+
 
 %% Defines the connection values for the DSN
 -define(ConnectStr, "DSN=erlang;UID=root;PWD=root").
+
+
 
 
 %% Initializing of the values that are to be inserted into the DB
