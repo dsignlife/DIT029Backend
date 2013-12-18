@@ -4,25 +4,27 @@
 
 -module(dbconnect).
 
--export([start/2]).
+-export([start/2, startodbc/0]).
 
 
 
 %% Defines the connection values for the DSN
--define(ConnectStr, "DSN=erlang;UID=root;PWD=root").
+-define(ConnectStr, "DSN=erlang;UID=LB;PWD=root").
 
 
-
+startodbc() ->
+	odbc:start().
+	
 
 %% Initializing of the values that are to be inserted into the DB
 
 start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
-
+	
 	%%Start ODBC
-	odbc:start(),
+	
     
 	%% Initialize the connection
-	{ok, Ref} = odbc:connect(?ConnectStr, []),
+	{ok, Ref} = odbc:connect("DSN=erlang;UID=root;PWD=root", []),
 	
 	%% Defines the Sql query
 	Sql_query = "INSERT INTO "++Ticker++" (Date, close, high, low, Open, Volume) VALUES
@@ -34,14 +36,8 @@ start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
      '"++Volume++"');",
 	
   %% Insert query into DB
-  odbc:sql_query(Ref, Sql_query),
- 
+ odbc:sql_query(Ref, Sql_query).
   
-  %% Disconnect from the DSN
-  odbc:disconnect(Ref),
-  
-  %% Stop the odbc service and quit
-  odbc:stop().
     
 
 
