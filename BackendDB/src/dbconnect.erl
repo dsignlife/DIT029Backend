@@ -13,18 +13,21 @@
 
 
 startodbc() ->
+	%%Start ODBC
 	odbc:start().
+    %% {ok, Ref} = odbc:connect("DSN=erlang;UID=root;PWD=root", []).
 	
 
 %% Initializing of the values that are to be inserted into the DB
 
 start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
 	
-	%%Start ODBC
+	odbc:start(),
 	
+	{ok,Ref} = odbc:connect("DSN=erlang;UID=root;PWD=root", []),
     
 	%% Initialize the connection
-	{ok, Ref} = odbc:connect("DSN=erlang;UID=root;PWD=root", []),
+	
 	
 	%% Defines the Sql query
 	Sql_query = "INSERT INTO "++Ticker++" (Date, close, high, low, Open, Volume) VALUES
@@ -36,7 +39,12 @@ start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
      '"++Volume++"');",
 	
   %% Insert query into DB
- odbc:sql_query(Ref, Sql_query).
+ odbc:sql_query(Ref, Sql_query),
+ 
+
+ odbc:disconnect(Ref),
+
+ odbc:stop().
   
     
 
