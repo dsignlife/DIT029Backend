@@ -24,7 +24,7 @@ start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
 	   
         
         {ok,Ref} = odbc:connect("DSN=erlang;UID=root;PWD=root", []),
-   %% io:format([Date, Close, High, Low, Open, Volume]),
+
         %% Defines the Sql query
         Sql_query = "INSERT INTO `testbackend`.`aapl` (Date, close, high, low, Open, Volume) VALUES
     ('"++Date++"',
@@ -35,7 +35,7 @@ start([Date, Close, High, Low, Open, Volume], [Ticker]) ->
      '"++Volume++"');",
         
   %% Insert query into DB
-%%io:format(Sql_query),
+  %%io:format(Sql_query),
  odbc:sql_query(Ref, Sql_query),
  
 
