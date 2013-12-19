@@ -16,9 +16,9 @@ into_list( Line, IO, Acc ) -> into_list( io:get_line(IO, ''), IO, [Line | Acc] )
 initiate() ->
        
     Lines = into_list("C:/Users/LB/Documents/erlangshiet/parser.txt"),
-    task(Lines).
+    insertlines(Lines).
 
-task([Head | Tail]) ->      
+insertlines([Head | Tail]) ->      
    [Date, Close, High, Low, Open, Volume] = string:tokens(Head, ","),
                    
     Volume2 = re:split(Volume, ""),
@@ -26,9 +26,9 @@ task([Head | Tail]) ->
     io:format([Date, Close, High, Low, Open, Volume2]),
    
         dbconnect:start([Date, Close, High, Low, Open, Volume2], Ticker),
-  task(Tail);
+  insertlines(Tail);
 
-task([]) -> done.
+insertlines([]) -> done.
 
 %% ====================================================================
 %% Internal functions

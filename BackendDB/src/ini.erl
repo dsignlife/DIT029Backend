@@ -15,7 +15,7 @@ ini() ->
         Name = "C:/Users/LB/Documents/erlangshiet/parser.txt",
         
      {ok, {{_Version, 200, _ReasonPhrase}, _Headers, Body}} =
-        httpc:request("http://chartapi.finance.yahoo.com/instrument/1.0/GOOG/chartdata;type=quote;range=1m/csv"),
+        httpc:request("http://chartapi.finance.yahoo.com/instrument/1.0/AAPL/chartdata;type=quote;range=1y/csv"),
         Data = Body,
         
         %%io:format(Data),
