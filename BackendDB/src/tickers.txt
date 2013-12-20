@@ -1,0 +1,9 @@
+aapl
+c
+goog
+mcd
+hnz
+msft
+ko
+wmt
+ericv
